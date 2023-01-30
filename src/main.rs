@@ -9,14 +9,10 @@ struct Solution {}
 fn is_palindrome(s: &str) -> bool {
     match s.len() {
         0 | 1 => true,
-        length => {
-            let first_half = &s[..(length - length % 2) / 2];
-            let second_half = &s[(length + length % 2) / 2..];
-            first_half
-                .chars()
-                .zip(second_half.chars().rev())
-                .all(|(a, b)| a == b)
-        }
+        _ => first_half(s)
+            .chars()
+            .zip(second_half(s).chars().rev())
+            .all(|(c1, c2)| c1 == c2),
     }
 }
 
@@ -35,11 +31,10 @@ fn second_half(s: &str) -> &str {
 #[cfg(test)]
 impl Solution {
     pub fn longest_palindrome(s: String) -> String {
-        let length = s.len();
         let mut answer = "";
         let mut max = 0;
-        for start in 0..length {
-            for end in start..(length + 1) {
+        for start in 0..s.len() {
+            for end in start..=s.len() {
                 if end - start < max {
                     continue;
                 }
