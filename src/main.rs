@@ -7,16 +7,17 @@ struct Solution {}
 
 #[cfg(test)]
 fn is_palindrome(s: &str) -> bool {
-    let length = s.len();
-    let first_half = &s[..(length - length % 2) / 2];
-    let second_half = &s[(length + length % 2) / 2..];
-    if length == 1 {
-        return true;
+    match s.len() {
+        0 | 1 => true,
+        length => {
+            let first_half = &s[..(length - length % 2) / 2];
+            let second_half = &s[(length + length % 2) / 2..];
+            first_half
+                .chars()
+                .zip(second_half.chars().rev())
+                .all(|(a, b)| a == b)
+        }
     }
-    first_half
-        .chars()
-        .zip(second_half.chars().rev())
-        .all(|(a, b)| a == b)
 }
 
 #[cfg(test)]
