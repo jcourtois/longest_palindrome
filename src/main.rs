@@ -10,8 +10,11 @@ fn is_palindrome(s: &str) -> bool {
     let length = s.len();
     let first_half = &s[..(length - length % 2) / 2];
     let second_half = &s[(length + length % 2) / 2..];
-    if length == 1 { return true; }
-    first_half.chars()
+    if length == 1 {
+        return true;
+    }
+    first_half
+        .chars()
         .zip(second_half.chars().rev())
         .all(|(a, b)| a == b)
 }
@@ -36,10 +39,11 @@ impl Solution {
         let mut max = 0;
         for start in 0..length {
             for end in start..(length + 1) {
-                println!("start: {}, end: {}, max: {}", start, end, max);
-                if end - start < max { continue; }
+                if end - start < max {
+                    continue;
+                }
                 let slice = &s[start..end];
-                
+
                 if is_palindrome(slice) {
                     answer = slice;
                     max = slice.len();
@@ -55,7 +59,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn case1first_half() {
+    fn case7first_half() {
         println!("looking for bb");
         assert_eq!(first_half("abcddcba"), "abcd");
         assert_eq!(first_half("abcdEdcba"), "abcd");
@@ -72,9 +76,11 @@ mod tests {
     #[test]
     fn case1() {
         println!("looking for bcb");
-        assert_eq!(Solution::longest_palindrome(String::from("abcabcbb")), "bcb")
+        assert_eq!(
+            Solution::longest_palindrome(String::from("abcabcbb")),
+            "bcb"
+        )
     }
-
 
     #[test]
     fn case_a() {
